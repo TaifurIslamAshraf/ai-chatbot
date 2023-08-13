@@ -6,15 +6,15 @@ export default function Page() {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
-      <Tabs defaultValue="login" className="w-[400px]">
+      <Tabs defaultValue="signin" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register">Register</TabsTrigger>
+          <TabsTrigger value="signin">Sign In</TabsTrigger>
+          <TabsTrigger value="sign up">Sign Up</TabsTrigger>
         </TabsList>
-        <TabsContent value="login">
+        <TabsContent value="signin">
          <LoginForm />
         </TabsContent>
-        <TabsContent value="register">
+        <TabsContent value="sign up">
            <RegisterForm />
         </TabsContent>
       </Tabs>

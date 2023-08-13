@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -72,11 +73,13 @@ const RegisterForm = () => {
       }),
     });
 
+    const result = await res.json()
+
     if (res.ok) {
-      router.push("/");
+      toast.success("Successfully Registerd. now Login");
       form.reset()
     } else {
-      console.error("Registretion failed");
+      toast.error(result.message);
     }
   };
 
@@ -149,7 +152,7 @@ const RegisterForm = () => {
                 )}
               />
               <Button type="submit" className="w-full">
-                Register
+                Sign Up
               </Button>
             </form>
           </Form>

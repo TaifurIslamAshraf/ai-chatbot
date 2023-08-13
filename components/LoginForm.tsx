@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   email: z
@@ -36,6 +39,7 @@ const FormSchema = z.object({
 });
 
 const LoginForm = () => {
+  const router = useRouter()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues:{
@@ -44,8 +48,18 @@ const LoginForm = () => {
     }
   });
 
-  const onSubmitLogin = (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+  const onSubmitLogin = async (data: z.infer<typeof FormSchema>) => {
+    const signinData = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false
+    })
+
+    if(signinData?.error){
+      toast.error(signinData.error)
+    }else{
+      router.push("/")
+    }
   };
 
   return (
@@ -87,7 +101,7 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Login</Button>
+              <Button type="submit" className="w-full">Sign In</Button>
             </form>
           </Form>
         </CardContent>
