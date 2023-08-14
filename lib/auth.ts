@@ -51,6 +51,7 @@ export const authOptions: AuthOptions = {
         }
       },
     }),
+
   ],
   callbacks: {
     async jwt({ token, user }) {
@@ -71,6 +72,7 @@ export const authOptions: AuthOptions = {
           username: token.username
         }
       }
-    }
+    },
+
   }
 };

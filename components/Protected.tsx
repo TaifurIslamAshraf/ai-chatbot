@@ -9,7 +9,6 @@ interface ProtectedProps {
 
 const Protected = async ({ children }: ProtectedProps) => {
   const session = await getServerSession(authOptions);
-
   if (session?.user) {
     return <>{children}</>;
   } else {

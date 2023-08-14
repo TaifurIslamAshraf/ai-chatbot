@@ -52,9 +52,8 @@ const LoginForm = () => {
     const signinData = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: false
+      redirect: false,
     })
-
     if(signinData?.error){
       toast.error(signinData.error)
     }else{
