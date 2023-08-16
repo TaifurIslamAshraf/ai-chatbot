@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -10,11 +11,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-   id String    @id @default(auto()) @map("_id") @db.ObjectId
-  username String @unique
-  email String @unique
-  password String
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String   @unique
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cetegory {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  celebrities Celebrity[]
+}
+
+model Celebrity {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  userName    String
+  src         String
+  discription String
+  instraction String @db.String
+  seed        String @db.String
+  name        String @db.String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cetegory   Cetegory @relation(fields: [cetegoryId], references: [id])
+  cetegoryId String   @db.ObjectId
+
+  @@index([cetegoryId])
+  @@fulltext([name])
 }

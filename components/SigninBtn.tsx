@@ -10,7 +10,7 @@ const SigninBtn = () => {
   return (
     <>
       {session?.user ? (
-        <Button variant="destructive" onClick={() => signOut()}>
+        <Button variant="destructive" size="sm" onClick={() => signOut()}>
           Sign Out
         </Button>
       ) : (

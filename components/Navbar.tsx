@@ -1,8 +1,12 @@
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import SigninBtn from "./SigninBtn";
+import { Button } from "./ui/button";
+
+import { MdWorkspacePremium } from "react-icons/md";
+import MobileSidebar from "./MobileSidebar";
+import { ModeToggle } from "./ThemeBtn";
 
 const poppins = Poppins({
   weight: ["600"],
@@ -11,9 +15,9 @@ const poppins = Poppins({
 
 const Navbar = () => {
   return (
-    <div className="fixed z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary w-full">
+    <div className="fixed z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary w-full h-16">
       <div className="flex items-center">
-        <Menu className="md:hidden block cursor-pointer" />
+        <MobileSidebar />
         <Link href={"/"}>
           <h1
             className={cn(
@@ -25,7 +29,11 @@ const Navbar = () => {
           </h1>
         </Link>
       </div>
-        <SigninBtn />
+       <div className="flex items-center gap-x-3">
+        <Button variant="premium" size="sm">Upgrade <MdWorkspacePremium size={18} className="fill-white" /></Button>
+        <ModeToggle />
+       <SigninBtn />
+       </div>
     </div>
   );
 };
