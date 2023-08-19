@@ -23,7 +23,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { ButtonLoading } from "./ButtonLoader";
 
 const FormSchema = z.object({
   email: z
@@ -47,6 +49,7 @@ const LoginForm = () => {
       password: "",
     }
   });
+  const isLoading = form.formState.isSubmitting
 
   const onSubmitLogin = async (data: z.infer<typeof FormSchema>) => {
     const signinData = await signIn("credentials", {
@@ -57,7 +60,7 @@ const LoginForm = () => {
     if(signinData?.error){
       toast.error(signinData.error)
     }else{
-      router.push("/")
+      router.push("/chatbot")
     }
   };
 
@@ -100,7 +103,9 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Sign In</Button>
+             {
+              isLoading ? <ButtonLoading className="w-full" /> :  <Button type="submit" className={cn("w-full")}>Sign In</Button>
+             }
             </form>
           </Form>
         </CardContent>

@@ -1,6 +1,7 @@
 "use client";
 
 import { PREAMBLE, SEED_CHAT } from "@/celebrity/constance";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Celebrity, Cetegory } from "@prisma/client";
 import axios from "axios";
@@ -84,7 +85,7 @@ const CelebrityForm = ({ initialData, cetegory }: CelebrityFormProps) => {
       toast.success("Successfully Done.")
 
       router.refresh()
-      router.push("/")
+      router.push("/chatbot")
     } catch (error) {
       toast.error("Somthing went wrong")
     }
@@ -257,7 +258,7 @@ const CelebrityForm = ({ initialData, cetegory }: CelebrityFormProps) => {
               )}
             />
             <div className="flex justify-center w-full">
-              <Button size="lg" className="w-full" disabled={isLoding}>
+              <Button size="lg" className={cn("w-full", isLoding && "cursor-wait")} disabled={isLoding}>
                 {initialData ? "Edit Chat Bot" : "Create Your Chat Bot"}
                 <Wand2 className="w-4 h-4 ml-2" />
               </Button>

@@ -6,7 +6,7 @@ import { Button, buttonVariants } from "./ui/button";
 
 const SigninBtn = () => {
   const { data: session } = useSession();
-
+  
   return (
     <>
       {session?.user ? (

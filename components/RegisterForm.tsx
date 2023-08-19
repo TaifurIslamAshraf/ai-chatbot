@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { ButtonLoading } from "./ButtonLoader";
 
 const FormSchema = z
   .object({
@@ -52,13 +53,14 @@ const RegisterForm = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues:{
+    defaultValues: {
       username: "",
       email: "",
       password: "",
-      confirmPassword: ""
-    }
+      confirmPassword: "",
+    },
   });
+  const isLoading = form.formState.isSubmitting;
 
   const onSubmitRegister = async (data: z.infer<typeof FormSchema>) => {
     const res = await fetch("http://localhost:3000/api/register", {
@@ -73,11 +75,11 @@ const RegisterForm = () => {
       }),
     });
 
-    const result = await res.json()
+    const result = await res.json();
 
     if (res.ok) {
       toast.success("Successfully Registerd. now Login");
-      form.reset()
+      form.reset();
     } else {
       toast.error(result.message);
     }
@@ -151,14 +153,15 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Sign Up
-              </Button>
+              {isLoading ? (
+                <ButtonLoading className="w-full" />
+              ) : (
+                <Button type="submit" className="w-full">
+                  Sign Up
+                </Button>
+              )}
             </form>
           </Form>
-
-    
-
         </CardContent>
       </Card>
     </div>

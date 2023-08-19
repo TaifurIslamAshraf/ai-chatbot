@@ -16,7 +16,7 @@ const Sidebar = () => {
     },
     {
       icon: Plus,
-      href: "/celebrity/new",
+      href: "/chatbot/celebrity/new",
       label: "Create",
       pro: true,
     },
