@@ -29,6 +29,7 @@ export async function PATCH(req: Request, { params }: ParamsProps) {
     const celebrity = await db.celebrity.update({
       where: {
         id: params.celebrityId,
+        userId: session?.user.id
       },
       data: {
         name,
@@ -46,5 +47,31 @@ export async function PATCH(req: Request, { params }: ParamsProps) {
   } catch (error) {
     console.log(error);
     return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request, { params }: ParamsProps) {
+  try {
+    const session: any = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return new NextResponse("Unauthorize user", { status: 401 });
+    }
+
+    const celebrity = await db.celebrity.delete({
+      where: {
+        userId: session?.user.id,
+        id: params.celebrityId,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "AI Chat deleted successfully",
+      celebrity,
+    });
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }

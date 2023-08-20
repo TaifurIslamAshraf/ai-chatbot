@@ -10,6 +10,7 @@ interface ChaiIdProps {
   };
 }
 
+
 const page = async ({ params }: ChaiIdProps) => {
   const session = await getServerSession(authOptions);
   const { chatId } = params;
