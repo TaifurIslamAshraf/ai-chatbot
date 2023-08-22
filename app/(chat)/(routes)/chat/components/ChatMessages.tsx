@@ -39,7 +39,7 @@ const ChatMessages = ({
       {messages.map((message) => (
         <ChatMessage
           key={message.content}
-          src={message.src}
+          src={celebrity.src}
           role={message.role}
           content={message.content}
         />

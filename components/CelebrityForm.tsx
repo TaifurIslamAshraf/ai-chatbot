@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
+import { ButtonLoading } from "./ButtonLoader";
 import ImageUpload from "./ImageUpload";
 import { Button } from "./ui/button";
 import {
@@ -71,23 +72,23 @@ const CelebrityForm = ({ initialData, cetegory }: CelebrityFormProps) => {
     },
   });
 
-  const router = useRouter()
+  const router = useRouter();
   const isLoding = form.formState.isSubmitting;
 
   const handleSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
-      if(initialData){
-        await axios.patch(`/api/celebrity/${initialData?.id}`, value)
-      }else{
-        await axios.post('/api/celebrity', value)
+      if (initialData) {
+        await axios.patch(`/api/celebrity/${initialData?.id}`, value);
+      } else {
+        await axios.post("/api/celebrity", value);
       }
-      form.reset()
-      toast.success("Successfully Done.")
+      form.reset();
+      toast.success("Successfully Done.");
 
-      router.refresh()
-      router.push("/chatbot")
+      router.refresh();
+      router.push("/chatbot");
     } catch (error) {
-      toast.error("Somthing went wrong")
+      toast.error("Somthing went wrong");
     }
   };
 
@@ -211,58 +212,67 @@ const CelebrityForm = ({ initialData, cetegory }: CelebrityFormProps) => {
               </p>
             </div>
             <Separator className="bg-primary/10" />
-            
           </div>
           <FormField
-              name="instruction"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className="col-span-2 md:col-span-1">
-                  <FormLabel>Instruction</FormLabel>
-                  <FormControl>
-                    <Textarea
+            name="instruction"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="col-span-2 md:col-span-1">
+                <FormLabel>Instruction</FormLabel>
+                <FormControl>
+                  <Textarea
                     className="bg-background resize-none"
                     rows={7}
-                      disabled={isLoding}
-                      placeholder={PREAMBLE}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                  Provide an intricate depiction of your celebrity&apos;s background and pertinent particulars.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-              <FormField
-              name="seed"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className="col-span-2 md:col-span-1">
-                  <FormLabel>Example Conversation</FormLabel>
-                  <FormControl>
-                    <Textarea
+                    disabled={isLoding}
+                    placeholder={PREAMBLE}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Provide an intricate depiction of your celebrity&apos;s
+                  background and pertinent particulars.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="seed"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="col-span-2 md:col-span-1">
+                <FormLabel>Example Conversation</FormLabel>
+                <FormControl>
+                  <Textarea
                     className="bg-background resize-none"
                     rows={7}
-                      disabled={isLoding}
-                      placeholder={SEED_CHAT}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                  Write couple of examples of a human chatting with your AI companion, write expected answers.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center w-full">
-              <Button size="lg" className={cn("w-full", isLoding && "cursor-wait")} disabled={isLoding}>
+                    disabled={isLoding}
+                    placeholder={SEED_CHAT}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Write couple of examples of a human chatting with your AI
+                  companion, write expected answers.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-center w-full">
+            {isLoding ? (
+              <ButtonLoading className="w-full" />
+            ) : (
+              <Button
+                size="lg"
+                className={cn("w-full", isLoding && "cursor-wait")}
+                disabled={isLoding}
+              >
                 {initialData ? "Edit Chat Bot" : "Create Your Chat Bot"}
                 <Wand2 className="w-4 h-4 ml-2" />
               </Button>
-            </div>
+            )}
+          </div>
         </form>
       </Form>
     </div>
