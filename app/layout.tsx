@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
 
+import ProModal from "@/components/ProModal";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ProModal />
             {children}
             <Toaster />
           </ThemeProvider>

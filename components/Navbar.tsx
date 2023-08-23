@@ -1,9 +1,12 @@
+'use client'
+
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import SigninBtn from "./SigninBtn";
 import { Button } from "./ui/button";
 
+import { useProModal } from "@/hooks/useProModal";
 import { MdWorkspacePremium } from "react-icons/md";
 import MobileSidebar from "./MobileSidebar";
 import { ModeToggle } from "./ThemeBtn";
@@ -14,6 +17,9 @@ const poppins = Poppins({
 });
 
 const Navbar = () => {
+
+  const proModal = useProModal()
+
   return (
     <div className="fixed z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary w-full h-16">
       <div className="flex items-center">
@@ -30,7 +36,7 @@ const Navbar = () => {
         </Link>
       </div>
        <div className="flex items-center gap-x-3">
-        <Button variant="premium" size="sm">Upgrade <MdWorkspacePremium size={18} className="fill-white" /></Button>
+        <Button onClick={proModal.onOpen} variant="premium" size="sm">Upgrade <MdWorkspacePremium size={18} className="fill-white" /></Button>
         <ModeToggle />
        <SigninBtn />
        </div>

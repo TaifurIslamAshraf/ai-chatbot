@@ -27,20 +27,20 @@ model Cetegory {
 }
 
 model Celebrity {
-  id          String @id @default(uuid())
+  id          String    @id @default(uuid())
   userId      String
   userName    String
   src         String
   description String
-  instruction String @db.Text
-  seed        String @db.Text
-  name        String @db.Text
+  instruction String    @db.Text
+  seed        String    @db.Text
+  name        String    @db.Text
   messages    Message[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  category   Cetegory  @relation(fields: [categoryId], references: [id])
+  category   Cetegory @relation(fields: [categoryId], references: [id])
   categoryId String
 
   @@index([categoryId])
@@ -64,5 +64,14 @@ model Message {
 
   celebrity Celebrity @relation(fields: [celebrityId], references: [id], onDelete: Cascade)
 
-@@index([celebrityId])
+  @@index([celebrityId])
+}
+
+model UserSubscription {
+  id                     String    @id @default(uuid())
+  userId                 String    @unique
+  stripeCustomarId       String?   @unique @map(name: "stripe_customar_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @unique @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @unique @map(name: "stripe_current_period_end")
 }
