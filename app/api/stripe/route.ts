@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-const settingsUrl = absoluteUrl("settings");
+const settingsUrl = absoluteUrl("chatbot/settings");
 
 export async function GET(req: Request) {
   try {
