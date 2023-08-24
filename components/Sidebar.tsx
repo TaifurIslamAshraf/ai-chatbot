@@ -1,12 +1,14 @@
 "use client";
 
+import { useProModal } from "@/hooks/useProModal";
 import { cn } from "@/lib/utils";
 import { Home, Plus, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-const Sidebar = () => {
+const Sidebar = ({isPro}:{isPro: boolean}) => {
   const pathName = usePathname();
   const router = useRouter();
+  const proModal = useProModal()
   const routes = [
     {
       icon: Home,
@@ -22,13 +24,18 @@ const Sidebar = () => {
     },
     {
       icon: Settings,
-      href: "/settings",
+      href: "/chatbot/settings",
       label: "Settings",
       pro: false,
     },
   ];
 
-  const onNaviage = (url: string, pr0: boolean) => {
+  const onNaviage = (url: string, pro: boolean) => {
+
+    if(pro && !isPro){
+      return proModal.onOpen()
+    }
+
     return router.push(url);
   };
 

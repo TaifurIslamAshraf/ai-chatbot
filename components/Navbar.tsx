@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
@@ -16,9 +16,8 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-const Navbar = () => {
-
-  const proModal = useProModal()
+const Navbar = ({ isPro }: { isPro: boolean }) => {
+  const proModal = useProModal();
 
   return (
     <div className="fixed z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary w-full h-16">
@@ -35,11 +34,15 @@ const Navbar = () => {
           </h1>
         </Link>
       </div>
-       <div className="flex items-center gap-x-3">
-        <Button onClick={proModal.onOpen} variant="premium" size="sm">Upgrade <MdWorkspacePremium size={18} className="fill-white" /></Button>
+      <div className="flex items-center gap-x-3">
+        {!isPro && (
+          <Button onClick={proModal.onOpen} variant="premium" size="sm">
+            Upgrade <MdWorkspacePremium size={18} className="fill-white" />
+          </Button>
+        )}
         <ModeToggle />
-       <SigninBtn />
-       </div>
+        <SigninBtn />
+      </div>
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import { authOptions } from "@/lib/auth";
 import db from "@/lib/db";
+import { checkSubscription } from "@/lib/subscription";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const session:any = await getServerSession(authOptions);
+  const isPro = await checkSubscription()
   try {
     const body = await req.json();
     const { src, name, description, instruction, seed, categoryId } = body;
@@ -16,7 +18,9 @@ export async function POST(req: Request) {
         return new NextResponse("All field are required", {status: 400})
     }
 
-    //TODO: Check for subcription
+    if(!isPro){
+      return new NextResponse("Pro subscription is required", {status: 403})
+    }
 
     const celebrity = await db.celebrity.create({
         data:{

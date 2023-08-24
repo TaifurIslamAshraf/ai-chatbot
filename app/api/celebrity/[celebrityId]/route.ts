@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import db from "@/lib/db";
+import { checkSubscription } from "@/lib/subscription";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -9,6 +10,7 @@ interface ParamsProps {
 
 export async function PATCH(req: Request, { params }: ParamsProps) {
   const session: any = await getServerSession(authOptions);
+  const isPro = await checkSubscription()
   try {
     const body = await req.json();
     const { src, name, description, instruction, seed, categoryId } = body;
@@ -24,7 +26,9 @@ export async function PATCH(req: Request, { params }: ParamsProps) {
       return new NextResponse("AI Bot id is required", { status: 400 });
     }
 
-    //TODO: Check for subcription
+    if(!isPro){
+      return new NextResponse("Pro subscription is required", {status: 403})
+    }
 
     const celebrity = await db.celebrity.update({
       where: {
