@@ -15,7 +15,7 @@ export default async function Page() {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
-      <Tabs defaultValue="signin" className="w-[400px]">
+      <Tabs defaultValue="signin" className="w-[300px] md:w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign In</TabsTrigger>
           <TabsTrigger value="sign up">Sign Up</TabsTrigger>
